@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MoviesExample.View.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:model="clr-namespace:MoviesExample.Model"
+    xmlns:viewModel="clr-namespace:MoviesExample.ViewModel"
+    Title="Movies"
+    x:DataType="viewModel:HomePageViewModel">
+    <AbsoluteLayout>
+        <VerticalStackLayout
+            Padding="10,0,10,100"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Spacing="5">
+            <Button Command="{Binding ClearListCommand}" Text="Clear Data" />
+            <ScrollView HeightRequest="{OnPlatform Android='800', iOS='700'}" MinimumHeightRequest="500">
+
+                <CollectionView
+                    x:Name="MoviesCollectionView"
+                    Margin="0,0,0,120"
+                    BackgroundColor="Transparent"
+                    HorizontalScrollBarVisibility="Never"
+                    ItemSizingStrategy="MeasureFirstItem"
+                    ItemsSource="{Binding Movies}"
+                    MinimumHeightRequest="500"
+                    SelectionChanged="MoviesCollectionView_OnSelectionChanged"
+                    SelectionChangedCommand="{Binding NavigateMoviesDetailCommand}"
+                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference MoviesCollectionView}}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="20"
+                            Orientation="Vertical"
+                            Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:MoviesSumary">
+                            <VerticalStackLayout VerticalOptions="Fill">
+                                <ffimage:CachedImage
+                                    Aspect="Fill"
+                                    DownsampleToViewSize="true"
+                                    ErrorPlaceholder="no_movie.png"
+                                    HeightRequest="300"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding Poster}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="200" />
+                                <Label HeightRequest="130">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Style="{StaticResource SubHeadline}" Text="{Binding Title}" />
+                                            <Span Text="&#10;" />
+                                            <Span
+                                                Style="{StaticResource MovieTitle}"
+                                                Text="{Binding Type}"
+                                                TextDecorations="Underline" />
+
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                            </VerticalStackLayout>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                Margin="10,25,10,10"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalOptions="Fill"
+                                HorizontalTextAlignment="Center"
+                                Text="No Data"
+                                TextColor="Gray" />
+                            <Entry
+                                Placeholder="Movie Name"
+                                Text="{Binding MovieSearchParameter}"
+                                WidthRequest="200" />
+                            <Button
+                                Command="{Binding GetMoviesCommand}"
+                                HorizontalOptions="Fill"
+                                Text="Search Movies" />
+                        </VerticalStackLayout>
+
+
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+
+            </ScrollView>
+        </VerticalStackLayout>
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Gray"
+            IsVisible="{Binding IsLoading}"
+            Opacity="0.5">
+            <ActivityIndicator
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="True"
+                IsVisible="{Binding IsLoading}"
+                VerticalOptions="CenterAndExpand"
+                Color="Black" />
+        </StackLayout>
+
+    </AbsoluteLayout>
+</ContentPage>

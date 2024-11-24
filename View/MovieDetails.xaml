@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MoviesExample.View.MovieDetails"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:iOsSpecific="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodel="clr-namespace:MoviesExample.ViewModel"
+    Title="{Binding Title}"
+    iOsSpecific:Page.UseSafeArea="True"
+    x:DataType="viewmodel:MovieDetailsViewModel">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="320" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="5,0,0,0"
+                Aspect="AspectFill"
+                HeightRequest="300"
+                Source="{Binding Movie.Poster}" />
+            <VerticalStackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,5,0,0">
+                <Label FontAttributes="Bold">
+                    <Label.FormattedText>
+                        <FormattedString>
+
+                            <Span Style="{StaticResource MovieDescription}" Text="Lançamento: " />
+                            <Span
+                                Style="{StaticResource MovieDescription}"
+                                Text="{Binding Movie.Released}"
+                                TextDecorations="Underline" />
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Duração: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Runtime}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Categoria: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Type}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Diretor: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Director}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Categoria: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Type}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Produção: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Production}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Site: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.Website}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="IMDB Nota: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.imdbRating}" />
+
+                            <Span Text="&#10;" />
+                            <Span Style="{StaticResource MovieDescription}" Text="Quantidade Votos: " />
+                            <Span Style="{StaticResource MovieDescription}" Text="{Binding Movie.imdbVotes}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Button
+                    Margin="10,50,20,20"
+                    Command="{Binding ShareMovieCommand}"
+                    HeightRequest="37"
+                    Text="Share" />
+            </VerticalStackLayout>
+            <Border
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="2,2,2,2"
+                Padding="16,8"
+                Background="#FFFFFF"
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 6,6,6,6"
+                StrokeThickness="2">
+                <Border.Stroke>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Offset="0.1" Color="#212121" />
+                        <GradientStop Offset="1.0" Color="#9E9E9E" />
+                    </LinearGradientBrush>
+                </Border.Stroke>
+                <VerticalStackLayout HorizontalOptions="Fill" MinimumWidthRequest="300">
+                    <Border
+                        Margin="0,0,0,20"
+                        BackgroundColor="#eeeeee"
+                        StrokeShape="RoundRectangle 6,6,6,6">
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource Headline}"
+                            Text="História"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Label
+                        Margin="10,0,0,0"
+                        HorizontalOptions="Center"
+                        Text="{Binding Movie.Plot}"
+                        VerticalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+
+        </Grid>
+    </ScrollView>
+</ContentPage>
